@@ -3,71 +3,80 @@
 // We are a company that handles book publications
 
 // Book
-// ISBN, Title, Author [], Language, Pub Date, Num Page, Category[]
+// ISBN, Title, Author [], Language, Pub Date, Category[]
 
 // Authors
 // Name, Id, Books[]
 
-// Publications 
+// Publications
 // Name, Id, Books[]
 
 // Requirements
-//-------------------------------------------------------------------------------
-// GET METHOD USED FOR DATA STRUCTURE 
-//-------------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------------------
+
 // Books
 
 // We need an API
-// to get all books
-// to get specific book
-// to get a list of books based on category
-// to get a list of books based on author
+
+// GET
+// to get all books ✅
+// to get specific book ✅
+// to get a list of books based on category✅
+// to get a list of books based on author -> [Task]🔥
+
+// POST
+// New Book ✅
+
+// PUT
+// Update book details✅
+// update/add new author✅
+
+// DELETE
+// delete a book✅
+// delete a author from a book✅
+
+// ---------------------------------------------------------------------------------------
 
 // Author
 
 // We need an API
-// to get all authors
-// to get specific author
-// to get a list of authors based on a book.-     Task
+
+// GET
+// to get all authors✅
+// to get specific author [Task]🔥
+// to get a list of authors based on a book. ✅
+
+// POST
+// New Author ✅
+
+// PUT
+// update Author name using id [Task] 🔥
+
+// DELETE
+// Delete an author [Task] 🔥🚀
+
+// ---------------------------------------------------------------------------------------
 
 // Publication
 
 // We need an API
-// to get all publications
-// to get specific publication
-// to get a list of publications based on a book.
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// POST & PUT  METHOD IS USED TO ACCESS DATA 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Books
+
+// GET
+// to get all publications ✅
+// to get specific publication [Task]🔥
+// to get a list of publications based on a book. [Task]🔥
 
 // POST
-// New books
+// Add new publication [task] 🔥
 
 // PUT
-// Update book Deatils
-// Update/Add New Author
+// update publication name using id [Task] 🔥
+// update/add new book to a publication✅
 
-//Delete
-// Delete book
-// Delete book based on author 
+// DELETE
+// delete a book from publication ✅
+// delete a publication [Task] 🔥🚀
 
-// Authors
 
-//POST
-// New Author
-
-//PUT
-//Author Details
-
-//DELETE
-//Delete author 
-
-//PUBLICATION
-
-//POST
-//Add New publication
-
-//PUT
-// update publication details
-//update publication 
+// How does the server serves the request ?
