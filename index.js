@@ -1,9 +1,17 @@
 require("dotenv").config();
-// Frame work
+
+// Frame work--require() means importing useful library
 const express = require("express");
 const mongoose = require("mongoose");
+
 //Database
 const database = require("./database/index")
+
+//Models
+const BookModel = require("./database/book");
+const AuthorModel = require("./database/author");
+const PublicationModel = require("./database/publication");
+
 // initialize the app- ShapeAI Application & Express
 const shapeAI = express();
 
@@ -29,8 +37,9 @@ Access        public
 Parameters    none
 Method        get
 */
-shapeAI.get("/",(req,res) => {
-   return res.json({books:database.books});
+shapeAI.get("/",async (req,res) => {
+    const getAllBooks = await BookModel.find();
+    return res.json(getAllBooks);
 });
 //========================================================
 /*
@@ -40,29 +49,30 @@ Access        public
 Parameters    isbn
 Method        get
 */
-shapeAI.get("/is/:isbn",(req,res) => {
- const getSpecificBook = database.books.filter(
-     (book) => book.ISBN === req.params.isbn
- );
- if(getSpecificBook.length ==0){
-     return res.json({
-         error:`No Book found for the ISBN of ${req.params.isbn}`,
-     });
- }
- return res.json({book: getSpecificBook});
+
+shapeAI.get("/is/:isbn", async (req,res) => {
+    const getSpecificBook = await BookModel.findOne({ISBN : req.params.isbn});
+    if(!getSpecificBook){
+        return res.json({
+            error: 'No book found for the ISBN of "${req.params.isbn}',
+        });
+    }
+   //const getAllbooks = await BookModel.find();
+   return res.json({books:getSpecificBook});
 });
 //=================================================================
 /*
-Route         /
+Route         /c/category
 Description   get specific  books based on ISBN
 Access        public
 Parameters    isbn
 Method        get
 */
-shapeAI.get("/c/:category",(req,res)=>{
-    const getSpecificBook = database.books.filter(
-        (book) => book.category.includes(req.params.category) 
-    );
+shapeAI.get("/c/:category",async (req,res)=>{
+    const getSpecificBook = await BookModel.findOne({
+        category: req.params.category,
+    });
+    
     if(getSpecificBook.length ==0){
         return res.json({
             error:`No Book found for the category of ${req.params.category}`,
@@ -72,7 +82,7 @@ shapeAI.get("/c/:category",(req,res)=>{
    });
 //=================================================================
 /*
-Route         /
+Route         /a/
 Description   get specific  books based on author  --TASK
 Access        public
 Parameters    isbn-(Books isbn in author's data)
@@ -103,7 +113,7 @@ shapeAI.get("/a",(req,res) => {
 
  //===============================================================
 /*
-Route         /author
+Route         /author/
 Description   get authors based on isbn
 Access        public
 Parameters    isbn
@@ -124,7 +134,7 @@ shapeAI.get("/author/:isbn",(req,res) => {
 
 /*
 Route         /publications
-Description   get publications 
+Description   get all publications 
 Access        public
 Parameters    none
 Method        get
@@ -142,10 +152,10 @@ Method        POST
 request----Body
 */
 
-shapeAI.post("/book/new",(req,res) =>{
+shapeAI.post("/book/new",async (req,res) =>{
     const {newBook} =  req.body;
-    database.books.push(newBook);
-    return res.json({books:database.books,message:"Book is added"});
+    BookModel.create(newBook);
+    return res.json({message:"Book is added"});
 });
 
 //===========================================================
@@ -157,10 +167,10 @@ Parameters    NONE
 Method        POST
 request----Body
 */
-shapeAI.post("/author/new",(req,res) =>{
+shapeAI.post("/author/new",async (req,res) =>{
     const {newAuthor} =  req.body;
-    database.authors.push(newAuthor);
-    return res.json({authors:database.authors,message:"Author is added"});
+    AuthorModel.create(newAuthor);
+    return res.json({message:"Author is added"});
 });
 
 //========================================================================
@@ -175,7 +185,7 @@ request----Body
 */
 shapeAI.post("/publication/new",(req,res) =>{
     const {newPublication} =  req.body;
-    database.publications.push(newPublication);
+    PublicationsModel.create(newPublication);
     return res.json({publications:database.publications,message:"Publisher is added"});
 });
 //================================================
